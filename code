@@ -1,0 +1,26 @@
+##Install & Load Libabries
+{r setup, include=FALSE}
+install.packages("reshape2")
+install.packages("ggplot2")
+load.libraries <- c('data.table', 'testthat', 'gridExtra', 'corrplot', 'GGally', 'ggplot2', 'e1071', 'dplyr')
+install.lib <- load.libraries[!load.libraries %in% installed.packages()]
+for(libs in install.lib) install.packages(libs, dependences = TRUE)
+sapply(load.libraries, require, character = TRUE)
+##Load  Dataset
+Crime_data <- read.csv("C:/Users/Owner/OneDrive - University of Derby/Desktop/Crime data/AssessmentCrimeData.csv")
+head(Crime_data)
+dim(Crime_data)
+cat('Crime dataset has', dim(Crime_data)[1], 'rows and', dim(Crime_data)[2], ' columns.')
+str(Crime_data)
+head(Crime_data)
+##Checking for NA and Null values
+colSums(sapply(Crime_data, is.na))
+any(is.na(Crime_data))
+any(is.null(Crime_data))
+#Check for duplicated rows.
+cat("The number of duplicated rows are", nrow(Crime_data) - nrow(unique(Crime_data)))
+print(summary(Crime_data))
+library(ggplot2)
+ggplot(Crime_data, aes(x = Population )) + 
+  geom_histogram(binwidth = 800) +
+  labs(title = "Population distribution")
